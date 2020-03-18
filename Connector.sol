@@ -6,7 +6,8 @@ interface AaveInterface {
      function borrow(address _reserve, uint256 _amount, uint256 _interestRateMode, uint16 _referralCode) external;
 
      function repay(address _reserve, uint256 _amount, address payable _onBehalfOf) external;
-
+     
+     function flashLoan(address _receiver, address _reserve, uint256 _amount, bytes calldata _params) external;
 }
 
 interface IERC20 {
@@ -95,6 +96,11 @@ contract AaveConnector is Helper {
      AaveInterface(getLendingPool()).deposit.value(msg.value)(_depositeReserve, _depositeAmount, _referralCode);
      AaveInterface(getLendingPool()).borrow(_borrowReserve, _borrowAmount, _interestRateMode, _referralCode);
  }
+ 
+ function flashLoan(address _receiver, address _reserve, uint256 _amount, bytes memory _params) public {
+     AaveInterface(getLendingPool()).flashLoan(_receiver, _reserve, _amount, _params);
+ }
+
  
 //  function repay(address _reserve, uint256 _amount, address payable _onBehalfOf, uint256 _maxamount) public {
 //      IERC20(getDAI()).approve(getDAI(), _maxamount);
