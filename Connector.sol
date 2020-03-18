@@ -1,7 +1,7 @@
 pragma solidity ^0.5.7;
 
 interface AaveInterface {
-     function deposit(address _reserve, uint256 _amount, uint16 _referralCode) external;
+     function deposit(address _reserve, uint256 _amount, uint16 _referralCode) external payable;
      
      function borrow(address _reserve, uint256 _amount, uint256 _interestRateMode, uint16 _referralCode) external;
 
@@ -82,26 +82,23 @@ interface IERC20 {
 
 contract Helper {
     function getLendingPool() public pure returns (address lendingpool) {
-        lendingpool = 0x9E5C7835E4b13368fd628196C4f1c6cEc89673Fa;
+        lendingpool = 0x580D4Fdc4BF8f9b5ae2fb9225D584fED4AD5375c;
     }
     
     function getDAI() public pure returns (address dai) {
-        dai = 0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa;
+        dai = 0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD;
     }
 }
 
 contract AaveConnector is Helper {
- function deposit(address _reserve, uint256 _amount, uint16 _referralCode) public {
-     AaveInterface(getLendingPool()).deposit(_reserve, _amount, _referralCode);
+ function borrow(address _depositeReserve, uint256 _depositeAmount, address _borrowReserve, uint256 _borrowAmount, uint256 _interestRateMode, uint16 _referralCode) public payable {
+     AaveInterface(getLendingPool()).deposit.value(msg.value)(_depositeReserve, _depositeAmount, _referralCode);
+     AaveInterface(getLendingPool()).borrow(_borrowReserve, _borrowAmount, _interestRateMode, _referralCode);
  }
  
- function borrow(address _reserve, uint256 _amount, uint256 _interestRateMode, uint16 _referralCode) public {
-     AaveInterface(getLendingPool()).borrow(_reserve, _amount, _interestRateMode, _referralCode);
- }
- 
- function repay(address _reserve, uint256 _amount, address payable _onBehalfOf, uint256 _maxamount) public {
-     IERC20(getDAI()).approve(getDAI(), _maxamount);
-     AaveInterface(getLendingPool()).repay(_reserve, _amount, _onBehalfOf);
- }
+//  function repay(address _reserve, uint256 _amount, address payable _onBehalfOf, uint256 _maxamount) public {
+//      IERC20(getDAI()).approve(getDAI(), _maxamount);
+//      AaveInterface(getLendingPool()).repay(_reserve, _amount, _onBehalfOf);
+//  }
 
 }
