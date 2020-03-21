@@ -83,11 +83,11 @@ interface IERC20 {
 
 contract Helper {
     function getLendingPool() public pure returns (address lendingpool) {
-        lendingpool = 0x580D4Fdc4BF8f9b5ae2fb9225D584fED4AD5375c;
+        lendingpool = 0x9E5C7835E4b13368fd628196C4f1c6cEc89673Fa;
     }
     
     function getDAI() public pure returns (address dai) {
-        dai = 0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD;
+        dai = 0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108;
     }
 }
 
@@ -100,11 +100,4 @@ contract AaveConnector is Helper {
  function flashLoan(address _receiver, address _reserve, uint256 _amount, bytes memory _params) public {
      AaveInterface(getLendingPool()).flashLoan(_receiver, _reserve, _amount, _params);
  }
-
- 
-//  function repay(address _reserve, uint256 _amount, address payable _onBehalfOf, uint256 _maxamount) public {
-//      IERC20(getDAI()).approve(getDAI(), _maxamount);
-//      AaveInterface(getLendingPool()).repay(_reserve, _amount, _onBehalfOf);
-//  }
-
 }
