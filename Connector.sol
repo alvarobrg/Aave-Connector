@@ -98,6 +98,7 @@ contract AaveConnector is Helper {
  }
  
  function flashLoan(address _receiver, address _reserve, uint256 _amount, bytes memory _params) public {
+     IERC20(getDAI()).transfer(_receiver, _amount);
      AaveInterface(getLendingPool()).flashLoan(_receiver, _reserve, _amount, _params);
  }
 }
