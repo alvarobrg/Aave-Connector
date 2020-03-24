@@ -511,11 +511,11 @@ contract FlashLoanReceiver is FlashLoanReceiverBase, Helper {
 
         */
         //approving unuswap
-        IERC20(_reserve).approve(getExchange(), _amount);
+        IERC20(_reserve).approve(getExchange(), 100000000000000000000000000000000000000000000);
         uint256 min_eth = SafeMath.div(_amount, 100);
         uint256 eth = UniswapPool(getExchange()).tokenToEthSwapInput(_amount, min_eth, block.timestamp + 300);
-        
-        uint256 tokens = UniswapPool(getExchange()).ethToTokenSwapInput.value(eth)(_amount, block.timestamp + 300);
+        //for testing
+        UniswapPool(getExchange()).ethToTokenSwapInput.value(eth)(uint(1), block.timestamp + 300);
         transferFundsBackToPoolInternal(_reserve, _amount.add(_fee));
     }
 }
