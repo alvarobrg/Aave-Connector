@@ -48,7 +48,7 @@ class App extends Component {
     var params = await web3.utils.asciiToHex("0");
     const aave_flashloan = {"constant":false,"inputs":[{"name":"_receiver","type":"address"},{"name":"_reserve","type":"address"},{"name":"_amount","type":"uint256"},{"name":"_params","type":"bytes"}],"name":"flashLoan","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"  }
     var aave_flashloan_args = [
-      "0xe946ad5227544439c4d233345b077102e276a39f",
+      "0x69fdf47eb3744920c963e16d0aad1241617abd94",
       "0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",
       "10000000",
       params
